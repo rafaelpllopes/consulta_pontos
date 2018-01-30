@@ -1,0 +1,35 @@
+
+<section class="container">
+  <article class="col s12">
+    <mz-select-container>
+      <select mz-select id="options-select" [label]="'Local do ponto'" [placeholder]="'Selecione o ponto'">
+        <option value="" disabled>Selecione o ponto</option>
+        <option *ngFor="let ponto of pontos" [value]="ponto.codigo">{{ ponto.nome }}</option>
+      </select>
+    </mz-select-container>
+    <div class="row">
+      <div class="col s6">
+          <mz-select-container>
+            <select mz-select id="options-select" [label]="'Mes'" [placeholder]="'Selecione o Mes'">
+              <option value="" disabled>Selecione o ponto</option>
+              <option *ngFor="let mes of meses" [value]="mes.numero">{{ mes.mes }}</option>
+            </select>
+          </mz-select-container>
+        </div>
+        <div class="col s6">
+          <mz-select-container>
+            <select mz-select id="options-select" [label]="'Ano'" [placeholder]="'Selecione o Ano'">
+              <option value="" disabled>Selecione o ponto</option>
+              <option *ngFor="let ano of anos" [value]="ano">{{ ano }}</option>
+            </select>
+          </mz-select-container>
+        </div>
+    </div>
+  </article>
+  <article class="col s6">
+    lista
+  </article>
+  <article class="col s6">
+    <router-outlet></router-outlet>
+  </article>
+</section>
