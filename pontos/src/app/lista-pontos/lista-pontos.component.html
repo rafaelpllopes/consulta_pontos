@@ -1,10 +1,11 @@
 
-<section class="container">
-  <article class="col s12">
+<section class="row">
+  <article class="container">
+    <h2>Parametros</h2>
     <mz-select-container>
       <select mz-select id="options-select" [label]="'Local do ponto'" [placeholder]="'Selecione o ponto'">
         <option value="" disabled>Selecione o ponto</option>
-        <option *ngFor="let ponto of pontos" [value]="ponto.codigo">{{ ponto.nome }}</option>
+        <option *ngFor="let ponto of pontos" [selected]="ponto.nome == 'SMSI'" [value]="ponto.codigo">{{ ponto.nome }}</option>
       </select>
     </mz-select-container>
     <div class="row">
@@ -12,7 +13,7 @@
           <mz-select-container>
             <select mz-select id="options-select" [label]="'Mes'" [placeholder]="'Selecione o Mes'">
               <option value="" disabled>Selecione o ponto</option>
-              <option *ngFor="let mes of meses" [value]="mes.numero">{{ mes.mes }}</option>
+              <option *ngFor="let mes of meses" [selected]="(mes.numero - 1) == mesAtual" [value]="mes.numero">{{ mes.mes }}</option>
             </select>
           </mz-select-container>
         </div>
@@ -20,14 +21,22 @@
           <mz-select-container>
             <select mz-select id="options-select" [label]="'Ano'" [placeholder]="'Selecione o Ano'">
               <option value="" disabled>Selecione o ponto</option>
-              <option *ngFor="let ano of anos" [value]="ano">{{ ano }}</option>
+              <option *ngFor="let ano of anos" [selected]="ano == anoAtual" [value]="ano">{{ ano }}</option>
             </select>
           </mz-select-container>
         </div>
     </div>
   </article>
-  <article class="col s6">
-    lista
+  <article class="col s6" *ngIf="profissionais">
+    <h3>Profissionais</h3>
+    <div class="input-field">
+      <i class="material-icons prefix">search</i>
+      <input id="pesquisar" type="search" class="validate" [(ngModel)]="filtro">
+      <label for="pesquisar">Filtro</label>
+    </div>
+    <div class="collection" *ngFor="let profissional of listaProfissionais()">
+      <a class="collection-item" [routerLink]="profissional.matricula" >{{ profissional.nome }}</a>
+    </div>
   </article>
   <article class="col s6">
     <router-outlet></router-outlet>

@@ -1,3 +1,40 @@
-<p>
-  registros works!
-</p>
+<h3>Registros</h3>
+<div class="row">
+  <div class="input-field col s4">
+    <input id="matricula" type="text" [value]="profissional.matricula" readonly>
+    <label for="matricula" class="active">Matricula</label>
+  </div>
+
+  <div class="input-field col s8">
+    <input id="ponto" type="text" [value]="profissional.ponto" readonly>
+    <label for="ponto" class="active">Ponto</label>
+  </div>
+  
+  <div class="input-field col s12">
+    <input id="nome" type="text" [value]="profissional.nome" readonly>
+    <label for="nome" class="active">Nome</label>
+  </div>
+</div>
+
+<table class="responsive-table striped centered">
+  <thead>
+    <tr>
+      <th>Data</th>
+      <th>Hora</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let registro of registros">
+      <td>{{ registro.data }}</td>
+      <td>{{ registro.hora }}</td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th>
+        Total de registros
+      </th>
+      <td>{{ total }}</td>
+    </tr>
+  </tfoot>
+</table>

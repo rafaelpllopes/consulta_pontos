@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ListaPontosService } from './lista-pontos.service';
+import { Data } from '@angular/router/src/config';
 
 @Component({
   selector: 'app-lista-pontos',
@@ -10,38 +12,32 @@ export class ListaPontosComponent implements OnInit {
   pontos: any[];
   meses: any[];
   anos: number[] = [];
+  profissionais: any[];
 
-  constructor() { }
+  mesAtual = new Date().getMonth();
+  anoAtual = new Date().getFullYear();
+
+  filtro: string;
+
+  constructor(
+    private service: ListaPontosService
+  ) { }
 
   ngOnInit() {
-    this.pontos = [
-      { nome: "SMSI", codigo: "2222" }
-    ];
-
-    this.meses = [
-      { mes: 'Janeiro', numero: '01' },
-      { mes: 'Fevereiro', numero: '02' },
-      { mes: 'Março', numero: '03' },
-      { mes: 'Abril', numero: '04' },
-      { mes: 'Maio', numero: '05' },
-      { mes: 'Junho', numero: '06' },
-      { mes: 'Julho', numero: '07' },
-      { mes: 'Agosto', numero: '08' },
-      { mes: 'Setembro', numero: '09' },
-      { mes: 'Outubro', numero: '10' },
-      { mes: 'Novembro', numero: '11' },
-      { mes: 'Dezembro', numero: '12' },
-    ];
-
-    this.addAno();
+    this.meses = this.service.meses;
+    this.anos = this.service.anos;
+    this.pontos = this.service.pontos;
+    this.profissionais = this.service.profissionais;
   }
 
-  addAno(){
-    let dataAtual = new Date();
-    
-    for(let ano = 2010; ano <= dataAtual.getFullYear(); ano++ ) {
-      this.anos.push(ano);
-    }
+  listaProfissionais() {
+    if (this.profissionais.length === 0 || this.filtro === undefined
+      || this.filtro.trim() === ''){
+        return this.profissionais;
+      }
+  
+      return this.profissionais.filter(
+         v => v.nome.toLocaleLowerCase().includes(this.filtro.toLocaleLowerCase())
+      );
   }
-
 }

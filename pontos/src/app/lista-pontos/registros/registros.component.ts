@@ -1,3 +1,4 @@
+import { ListaPontosService } from './../lista-pontos.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegistrosComponent implements OnInit {
 
-  constructor() { }
+  registros: any[];
+
+  profissional: any = {
+    nome: 'Joao',
+    matricula: '2222',
+    ponto: 'SMSI'
+  };
+
+  total: number;
+
+  constructor(
+    private service: ListaPontosService
+  ) { }
 
   ngOnInit() {
+    this.registros = this.service.registros;
+    this.total = this.registros.length;
   }
-
 }
