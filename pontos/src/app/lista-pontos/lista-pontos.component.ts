@@ -1,19 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { inject } from '@angular/core/testing';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ListaPontosService } from './lista-pontos.service';
-import { Data } from '@angular/router/src/config';
+import { Subscription } from 'rxjs/Rx';
 
 @Component({
   selector: 'app-lista-pontos',
   templateUrl: './lista-pontos.component.html',
   styleUrls: ['./lista-pontos.component.css']
 })
-export class ListaPontosComponent implements OnInit {
+export class ListaPontosComponent implements OnInit, OnDestroy {
 
   pontos: any[];
   meses: any[];
   anos: number[] = [];
   profissionais: any[];
-
+  //inscricao: Subscription;
   mesAtual = new Date().getMonth();
   anoAtual = new Date().getFullYear();
 
@@ -24,6 +25,7 @@ export class ListaPontosComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.profissionais = this.service.profissionais;
     this.meses = this.service.meses;
     this.anos = this.service.anos;
     this.pontos = this.service.pontos;
@@ -39,5 +41,9 @@ export class ListaPontosComponent implements OnInit {
       return this.profissionais.filter(
          v => v.nome.toLocaleLowerCase().includes(this.filtro.toLocaleLowerCase())
       );
+  }
+
+  ngOnDestroy() {
+    //this.inscricao.unsubscribe();
   }
 }

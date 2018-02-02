@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class ListaPontosService {
@@ -25,7 +26,7 @@ export class ListaPontosService {
   ];
 
   pontos: any[] = [
-    { nome: "SMSI", codigo: "2222" }
+    { nome: "SMSI", codigo: "166" }
   ];
 
   registros: any[] = [
@@ -53,5 +54,4 @@ export class ListaPontosService {
       this.anos.push(ano);
     }
   }
-
 }
