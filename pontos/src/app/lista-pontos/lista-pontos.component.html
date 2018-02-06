@@ -3,15 +3,16 @@
   <article class="container">
     <h2>Parametros</h2>
     <mz-select-container>
-      <select mz-select id="options-select" [label]="'Local do ponto'" [placeholder]="'Selecione o ponto'">
+      <select mz-select id="options-select" [label]="'Local do ponto'" [placeholder]="'Selecione o ponto'" [(ngModel)]="ponto" (change)="buscarProfissionais()">
         <option value="" disabled>Selecione o ponto</option>
-        <option *ngFor="let ponto of pontos" [selected]="ponto.nome == 'SMSI'" [value]="ponto.codigo">{{ ponto.nome }}</option>
+        <option *ngFor="let ponto of pontos" [value]="ponto.codigo">{{ ponto.nome }}</option>
+        <option [value]="166" selected>SMSI</option>
       </select>
     </mz-select-container>
     <div class="row">
       <div class="col s6">
           <mz-select-container>
-            <select mz-select id="options-select" [label]="'Mes'" [placeholder]="'Selecione o Mes'">
+            <select mz-select id="options-select" [label]="'Mes'" [placeholder]="'Selecione o Mes'" [(ngModel)]="mes">
               <option value="" disabled>Selecione o ponto</option>
               <option *ngFor="let mes of meses" [selected]="(mes.numero - 1) == mesAtual" [value]="mes.numero">{{ mes.mes }}</option>
             </select>
@@ -19,7 +20,7 @@
         </div>
         <div class="col s6">
           <mz-select-container>
-            <select mz-select id="options-select" [label]="'Ano'" [placeholder]="'Selecione o Ano'">
+            <select mz-select id="options-select" [label]="'Ano'" [placeholder]="'Selecione o Ano'" [(ngModel)]="ano">
               <option value="" disabled>Selecione o ponto</option>
               <option *ngFor="let ano of anos" [selected]="ano == anoAtual" [value]="ano">{{ ano }}</option>
             </select>
@@ -27,7 +28,7 @@
         </div>
     </div>
   </article>
-  <article class="col s6" *ngIf="profissionais">
+  <article class="col s6" *ngIf="profissionais.length > 0">
     <h3>Profissionais</h3>
     <div class="input-field">
       <i class="material-icons prefix">search</i>

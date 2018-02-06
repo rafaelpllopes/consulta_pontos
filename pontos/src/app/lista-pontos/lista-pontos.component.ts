@@ -1,7 +1,7 @@
-import { inject } from '@angular/core/testing';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ListaPontosService } from './lista-pontos.service';
 import { Subscription } from 'rxjs/Rx';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-lista-pontos',
@@ -10,26 +10,29 @@ import { Subscription } from 'rxjs/Rx';
 })
 export class ListaPontosComponent implements OnInit, OnDestroy {
 
-  pontos: any[];
-  meses: any[];
-  anos: number[] = [];
-  profissionais: any[];
-  //inscricao: Subscription;
-  mesAtual = new Date().getMonth();
-  anoAtual = new Date().getFullYear();
-
+  pontos: any[] = [];
+  profissionais: any[] = [];
+  inscricaoProfissionais: Subscription;
+  inscricaoPontos: Subscription;
   filtro: string;
 
+  mes: number;
+  ano: number;
+  ponto: string;
+
   constructor(
-    private service: ListaPontosService
+    private service: ListaPontosService,
+    private router: Router
   ) { }
 
   ngOnInit() {
-    this.profissionais = this.service.profissionais;
-    this.meses = this.service.meses;
-    this.anos = this.service.anos;
-    this.pontos = this.service.pontos;
-    this.profissionais = this.service.profissionais;
+    this.inscricaoPontos = this.service.getPontos().subscribe(
+      dados => dados.forEach(
+        dado => this.pontos.push(dado)
+      )
+    );
+
+    this.buscarProfissionais();
   }
 
   listaProfissionais() {
@@ -44,6 +47,15 @@ export class ListaPontosComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    //this.inscricao.unsubscribe();
+    this.inscricaoProfissionais.unsubscribe();
+  }
+
+  buscarProfissionais() {
+    this.profissionais.length = 0;
+    this.inscricaoProfissionais = this.service.getProfissionais(this.ponto).subscribe(profissionais => {
+      profissionais.forEach(profissional => {
+        this.profissionais.push(profissional);
+      })
+    });
   }
 }
