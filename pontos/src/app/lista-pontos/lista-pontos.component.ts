@@ -15,10 +15,17 @@ export class ListaPontosComponent implements OnInit, OnDestroy {
   inscricaoProfissionais: Subscription;
   inscricaoPontos: Subscription;
   filtro: string;
+  anos: any;
+  meses: any;
+
+  mesAtual = new Date().getMonth();
+  anoAtual = new Date().getFullYear();
 
   mes: number;
   ano: number;
   ponto: string;
+
+  parametros: any;
 
   constructor(
     private service: ListaPontosService,
@@ -31,8 +38,8 @@ export class ListaPontosComponent implements OnInit, OnDestroy {
         dado => this.pontos.push(dado)
       )
     );
-
-    this.buscarProfissionais();
+    this.anos = this.service.anos;
+    this.meses = this.service.meses;
   }
 
   listaProfissionais() {
@@ -57,5 +64,16 @@ export class ListaPontosComponent implements OnInit, OnDestroy {
         this.profissionais.push(profissional);
       })
     });
+  }
+
+  abrir(matricula: string, nome: string) {
+    console.log(this.ponto);
+     this.parametros = {
+      'nome': nome,
+      'matricula': matricula,
+      'ponto': this.ponto,
+      'mes': this.mes,
+      'ano': this.ano
+    };
   }
 }

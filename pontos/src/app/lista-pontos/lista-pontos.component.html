@@ -36,10 +36,12 @@
       <label for="pesquisar">Filtro</label>
     </div>
     <div class="collection" *ngFor="let profissional of listaProfissionais()">
-      <a class="collection-item" [routerLink]="profissional.matricula" >{{ profissional.nome }}</a>
+      <a class="collection-item" (click)="abrir(profissional.matricula, profissional.nome)">{{ profissional.nome }}</a>
     </div>
   </article>
   <article class="col s6">
-    <router-outlet></router-outlet>
+    <!--<router-outlet></router-outlet>-->
+    <app-registros *ngIf="parametros" [parametros]="parametros">
+    </app-registros>
   </article>
 </section>

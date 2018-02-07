@@ -54,7 +54,13 @@ export class ListaPontosService {
 
   getRegistros(matricula, ponto, mes, ano) {
     return this.http
-      .get(`http://192.168.50.8/pontos/consultaRegistros.php?local=${ponto}&matricula=${matricula}&mes=${mes}&ano=${ano}`, {'headers': this.headers})
+      .get(`http://localhost/pontos/consultaRegistros.php?local=${ponto}&matricula=${matricula}&mes=${mes}&ano=${ano}`, {'headers': this.headers})
+      .map(dados => dados.json());
+  }
+
+  getUnidade(ponto) {
+    return this.http
+      .get(`http://localhost/pontos/consultaPontosNomes.php?local=${ponto}`, {'headers': this.headers})
       .map(dados => dados.json());
   }
 }

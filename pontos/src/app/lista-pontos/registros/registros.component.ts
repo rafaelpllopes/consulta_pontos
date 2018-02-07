@@ -1,47 +1,44 @@
 import { Subscription } from 'rxjs/Rx';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, OnChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { ListaPontosService } from './../lista-pontos.service';
-
 
 @Component({
   selector: 'app-registros',
   templateUrl: './registros.component.html',
   styleUrls: ['./registros.component.css']
 })
-export class RegistrosComponent implements OnInit, OnDestroy {
+export class RegistrosComponent implements OnInit, OnDestroy, OnChanges {
 
-  ano: number;
-  mes: number;
-  matricula: string;
-  ponto: string;
-  inscricao: Subscription;
-
+  @Input() parametros: any;
+  inscricaoRegistros: Subscription;
   registros: any[] = [];
-
-  profissional: any = {
-    nome: 'Joao',
-    matricula: '2222',
-    ponto: 'SMSI'
-  };
-
-  total: number;
+  unidade: string;
 
   constructor(
     private service: ListaPontosService,
-    private route: ActivatedRoute
   ) { }
 
-  ngOnInit() {
-    this.total = this.registros.length;
+  ngOnInit() {}
 
-    this.inscricao = this.route.params.subscribe(params => {
-      this.matricula = params['id'];
-    });    
-  }
+  ngOnChanges() {
+    this.registros.length = 0;
+    
+    if (this.parametros.ponto == '166'){
+      this.unidade = 'SMSI';
+    } else {
+      this.service.getUnidade(this.parametros.ponto).subscribe(unidade => this.unidade = unidade[0].nome);
+    }
+
+    this.inscricaoRegistros = this.service.getRegistros(
+      this.parametros.matricula, this.parametros.ponto, this.parametros.mes, this.parametros.ano
+    ).subscribe(registros => 
+      registros.forEach(registro => this.registros.push(registro))
+    );
+  }  
 
   ngOnDestroy() {
-    this.inscricao.unsubscribe();
+    this.inscricaoRegistros.unsubscribe();
   }
 }
