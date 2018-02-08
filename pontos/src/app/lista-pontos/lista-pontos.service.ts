@@ -6,6 +6,7 @@ import { Http, Headers } from '@angular/http';
 export class ListaPontosService {
 
   private headers: Headers;
+  private host = location.hostname;
 
   meses: any[] = [
     { mes: 'Janeiro', numero: '01' },
@@ -42,25 +43,25 @@ export class ListaPontosService {
 
   getPontos(){
     return this.http
-      .get(`http://localhost/pontos/consultaPontos.php`, {'headers': this.headers})
+      .get(`http://${this.host}/pontos/consultaPontos.php`, {'headers': this.headers})
       .map(dados => dados.json());
   }
 
   getProfissionais(ponto) {
     return this.http
-      .get(`http://localhost/pontos/consultaNomes.php?local=${ponto}`, {'headers': this.headers})
+      .get(`http://${this.host}/pontos/consultaNomes.php?local=${ponto}`, {'headers': this.headers})
       .map(dados => dados.json());
   }
 
   getRegistros(matricula, ponto, mes, ano) {
     return this.http
-      .get(`http://localhost/pontos/consultaRegistros.php?local=${ponto}&matricula=${matricula}&mes=${mes}&ano=${ano}`, {'headers': this.headers})
+      .get(`http://${this.host}/pontos/consultaRegistros.php?local=${ponto}&matricula=${matricula}&mes=${mes}&ano=${ano}`, {'headers': this.headers})
       .map(dados => dados.json());
   }
 
   getUnidade(ponto) {
     return this.http
-      .get(`http://localhost/pontos/consultaPontosNomes.php?local=${ponto}`, {'headers': this.headers})
+      .get(`http://${this.host}/pontos/consultaPontosNomes.php?local=${ponto}`, {'headers': this.headers})
       .map(dados => dados.json());
   }
 }
