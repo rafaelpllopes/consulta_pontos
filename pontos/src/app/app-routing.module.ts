@@ -4,10 +4,7 @@ import { ListaPontosComponent } from './lista-pontos/lista-pontos.component';
 import { RegistrosComponent } from './lista-pontos/registros/registros.component';
 
 const routes: Routes = [
-  { path: 'home', component: ListaPontosComponent, children: [
-      { path: ':id', component: RegistrosComponent }
-    ] 
-  },
+  { path: 'home', component: ListaPontosComponent },
   { path: '', pathMatch: 'full', redirectTo: 'home' },
   { path: '**', pathMatch: 'full', redirectTo: 'home' }
 ];

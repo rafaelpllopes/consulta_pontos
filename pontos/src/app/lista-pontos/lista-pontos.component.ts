@@ -18,7 +18,6 @@ export class ListaPontosComponent implements OnInit, OnDestroy {
   anos: any;
   meses: any;
 
-  mesAtual = new Date().getMonth();
   anoAtual = new Date().getFullYear();
 
   mes: number;
@@ -30,7 +29,11 @@ export class ListaPontosComponent implements OnInit, OnDestroy {
   constructor(
     private service: ListaPontosService,
     private router: Router
-  ) { }
+  ) {
+    this.ponto = '166';
+    this.mes = new Date().getMonth() + 1;
+    this.ano = new Date().getFullYear();
+  }
 
   ngOnInit() {
     this.inscricaoPontos = this.service.getPontos().subscribe(
@@ -40,6 +43,7 @@ export class ListaPontosComponent implements OnInit, OnDestroy {
     );
     this.anos = this.service.anos;
     this.meses = this.service.meses;
+    this.buscarProfissionais();
   }
 
   listaProfissionais() {

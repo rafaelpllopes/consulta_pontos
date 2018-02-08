@@ -6,7 +6,7 @@
       <select mz-select id="options-select" [label]="'Local do ponto'" [placeholder]="'Selecione o ponto'" [(ngModel)]="ponto" (change)="buscarProfissionais()">
         <option value="" disabled>Selecione o ponto</option>
         <option *ngFor="let ponto of pontos" [value]="ponto.codigo">{{ ponto.nome }}</option>
-        <option [value]="166" selected>SMSI</option>
+        <option [value]="166" [selected]="ponto == 'SMSI'">SMSI</option>
       </select>
     </mz-select-container>
     <div class="row">
@@ -14,7 +14,7 @@
           <mz-select-container>
             <select mz-select id="options-select" [label]="'Mes'" [placeholder]="'Selecione o Mes'" [(ngModel)]="mes">
               <option value="" disabled>Selecione o ponto</option>
-              <option *ngFor="let mes of meses" [selected]="(mes.numero - 1) == mesAtual" [value]="mes.numero">{{ mes.mes }}</option>
+              <option *ngFor="let mes of meses" [selected]="mes.numero == mes" [value]="mes.numero">{{ mes.mes }}</option>
             </select>
           </mz-select-container>
         </div>
