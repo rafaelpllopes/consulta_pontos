@@ -36,9 +36,15 @@ export class RegistrosComponent implements OnInit, OnDestroy, OnChanges {
     ).subscribe(registros => 
       registros.forEach(registro => this.registros.push(registro))
     );
-  }  
+  } 
 
   ngOnDestroy() {
     this.inscricaoRegistros.unsubscribe();
+  }
+
+  countRegistros() {
+    let total: number = 0;
+    this.registros.forEach(registro => registro.horas.forEach(hora => total++));
+    return total;
   }
 }

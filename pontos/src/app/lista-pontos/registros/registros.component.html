@@ -31,21 +31,33 @@
   <thead>
     <tr>
       <th>Data</th>
-      <th>Hora</th>
+      <th colspan="4">Horarios</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let registro of registros">
-      <td>{{ registro.registro | date:'dd/MM/yyyy' }}</td>
-      <td>{{ registro.registro | date:'HH:mm' }}</td>
+      <td>{{ registro.data | date:'dd/MM/yyyy' }}</td>
+      <td>{{ registro?.horas[0] }}</td>
+      <td>{{ registro?.horas[1] }}</td>
+      <td>{{ registro?.horas[2] }}</td>
+      <td>{{ registro?.horas[3] }}</td>
+      <td>{{ registro?.horas[4] }}</td>
+      <td>{{ registro?.horas[5] }}</td>
+      <td>{{ registro?.horas[6] }}</td>
+      <td>{{ registro?.horas[7] }}</td>
+      <td>{{ registro?.horas[8] }}</td>
+      <td>{{ registro?.horas[9] }}</td>
+
     </tr>
   </tbody>
   <tfoot>
     <tr>
       <th>
-        Total de registros
+        Total de dias
       </th>
       <td>{{ registros.length }}</td>
+      <th>Total de registros</th>
+      <td>{{ countRegistros() }}</td>
     </tr>
   </tfoot>
 </table>

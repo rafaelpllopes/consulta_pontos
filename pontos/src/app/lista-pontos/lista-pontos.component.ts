@@ -71,7 +71,6 @@ export class ListaPontosComponent implements OnInit, OnDestroy {
   }
 
   abrir(matricula: string, nome: string) {
-    console.log(this.ponto);
      this.parametros = {
       'nome': nome,
       'matricula': matricula,
