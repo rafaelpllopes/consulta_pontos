@@ -8,7 +8,7 @@ import 'rxjs/add/operator/map';
 import { RegistrosComponent } from './registros/registros.component';
 import { ListaPontosComponent } from './lista-pontos.component';
 import { ListaPontosService } from './lista-pontos.service';
-import { MzSelectModule } from 'ng2-materialize'
+import { MzSelectModule } from 'ng2-materialize';
 
 @NgModule({
   imports: [

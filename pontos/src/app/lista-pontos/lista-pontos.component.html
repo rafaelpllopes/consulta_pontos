@@ -32,16 +32,18 @@
     <h3>Profissionais</h3>
     <div class="input-field">
       <i class="material-icons prefix">search</i>
-      <input id="pesquisar" type="search" class="validate" [(ngModel)]="filtro">
+      <input id="pesquisar" type="search" class="validate" [(ngModel)]="filtro" autofocus>
       <label for="pesquisar">Filtro</label>
     </div>
-    <div class="collection" *ngFor="let profissional of listaProfissionais()">
-      <a class="collection-item" (click)="abrir(profissional.matricula, profissional.nome)">{{ profissional.nome }}</a>
+    <div class="collection">
+      <a class="collection-item" 
+        *ngFor="let profissional of listaProfissionais()"
+        (click)="abrir(profissional.matricula, profissional.nome)">
+        {{ profissional.nome }}
+      </a>
     </div>
   </article>
   <article class="col s6">
-    <!--<router-outlet></router-outlet>-->
-    <app-registros *ngIf="parametros" [parametros]="parametros">
-    </app-registros>
+    <app-registros *ngIf="parametros" [parametros]="parametros"></app-registros>
   </article>
 </section>

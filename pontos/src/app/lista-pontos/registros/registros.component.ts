@@ -24,15 +24,7 @@ export class RegistrosComponent implements OnInit, OnDestroy, OnChanges {
     private service: ListaPontosService,
   ) { }
 
-  ngOnInit() {
-    /*let tempo1 = this.hmh.diff('08h 00m', '12h 02m', 'hours');
-    let tempo2 = this.hmh.diff('13h 05m', '17h 10m', 'hours');
-    let hora1 = `${parseInt(tempo1.h)}h ${tempo1.m}m`;
-    let hora2 = `${parseInt(tempo2.h)}h ${tempo2.m}m`
-    console.log(hora1);
-    console.log(hora2);
-    console.log(this.hmh.sum(`${hora1} ${hora2}`, 'hours'));*/
-  }
+  ngOnInit() {}
 
   ngOnChanges() {
     this.registros.length = 0;
@@ -68,7 +60,12 @@ export class RegistrosComponent implements OnInit, OnDestroy, OnChanges {
       horas.push(`${div[0]}h ${div[1]}m`);
     });
     let result = this.calculaHoras(horas);
-    return result ? `${this.zfill.pad(parseInt(result.h), 2)}:${this.zfill.pad(result.m,2)}`:result;
+    
+    if(result.h != null && result.m != null) {
+      return result ? `${this.zfill.pad(parseInt(result.h), 2)}:${this.zfill.pad(result.m,2)}`:result;
+    }
+
+    return '';    
   }
 
   calculaHoras(horas) {
@@ -90,12 +87,12 @@ export class RegistrosComponent implements OnInit, OnDestroy, OnChanges {
       }
       case 6:
       case 7: {
+        let soma;
         calc.push(this.hmh.diff(horas[0], horas[1], 'hours'));
         calc.push(this.hmh.diff(horas[2], horas[3], 'hours'));
         calc.push(this.hmh.diff(horas[4], horas[5], 'hours'));
-        result =  this.hmh.sum(`${this.hmh.sum(`${this.zfill.pad(parseInt(calc[0].h), 2)}h ${calc[0].m}m ${this.zfill.pad(parseInt(calc[1].h), 2)}h ${calc[1].m}m`, 'hours')}
-          ${this.zfill.pad(parseInt(calc[2].h), 2)}h ${calc[2].m}m           `
-        ,'hours');
+        soma = this.hmh.sum(`${this.zfill.pad(parseInt(calc[0].h), 2)}h ${calc[0].m}m ${this.zfill.pad(parseInt(calc[1].h), 2)}h ${calc[1].m}m`, 'hours');
+        result = this.hmh.sum(`${this.zfill.pad(parseInt(soma.h), 2)}h ${soma.m}m ${this.zfill.pad(parseInt(calc[2].h), 2)}h ${calc[2].m}m`, 'hours');
         return result;
       }
       default: {
