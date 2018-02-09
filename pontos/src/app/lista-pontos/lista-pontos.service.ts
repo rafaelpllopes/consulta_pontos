@@ -6,7 +6,8 @@ import { Http, Headers } from '@angular/http';
 export class ListaPontosService {
 
   private headers: Headers;
-  private host = location.hostname;
+  //private host = location.host; //Produçao *descomentar e comentar a de baixo quando for fazer o build*
+  private host = '189.44.213.211:8083'; //Desenvolvimento
 
   meses: any[] = [
     { mes: 'Janeiro', numero: '01' },

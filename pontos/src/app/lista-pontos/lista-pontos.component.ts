@@ -20,7 +20,7 @@ export class ListaPontosComponent implements OnInit, OnDestroy {
 
   anoAtual = new Date().getFullYear();
 
-  mes: number;
+  mes: string;
   ano: number;
   ponto: string;
 
@@ -31,7 +31,7 @@ export class ListaPontosComponent implements OnInit, OnDestroy {
     private router: Router
   ) {
     this.ponto = '166';
-    this.mes = new Date().getMonth() + 1;
+    this.mes = this.pad((new Date().getMonth() + 1).toString(), 2);
     this.ano = new Date().getFullYear();
   }
 
@@ -78,5 +78,11 @@ export class ListaPontosComponent implements OnInit, OnDestroy {
       'mes': this.mes,
       'ano': this.ano
     };
+  }
+
+  pad(num, size) {
+    let s = num+"";
+    while (s.length < size) s = "0" + s;
+    return s;
   }
 }
