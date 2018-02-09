@@ -86,7 +86,6 @@ export class RegistrosComponent implements OnInit, OnDestroy, OnChanges {
         calc.push(this.hmh.diff(horas[0], horas[1], 'hours'));
         calc.push(this.hmh.diff(horas[2], horas[3], 'hours'));
         result = this.hmh.sum(`${this.zfill.pad(parseInt(calc[0].h), 2)}h ${calc[0].m}m ${this.zfill.pad(parseInt(calc[1].h), 2)}h ${calc[1].m}m`, 'hours');
-        console.log(`${this.zfill.pad(parseInt(calc[0].h), 2)}h ${calc[0].m}m ${this.zfill.pad(parseInt(calc[1].h), 2)}h ${calc[1].m}m`);
         return result;
       }
       case 6:
