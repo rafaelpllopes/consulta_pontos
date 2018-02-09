@@ -3,7 +3,8 @@ import { Component, OnInit, OnDestroy, Input, OnChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { ListaPontosService } from './../lista-pontos.service';
-import { Hmh } from '../../helpers/calcular';
+import { Hmh } from '../../helpers/Hmh';
+import { Zfill } from '../../helpers/Zfill';
 
 @Component({
   selector: 'app-registros',
@@ -16,7 +17,8 @@ export class RegistrosComponent implements OnInit, OnDestroy, OnChanges {
   inscricaoRegistros: Subscription;
   registros: any[] = [];
   unidade: string;
-  hmh = new Hmh;
+  hmh = new Hmh();
+  zfill = new Zfill();
 
   constructor(
     private service: ListaPontosService,
@@ -66,7 +68,7 @@ export class RegistrosComponent implements OnInit, OnDestroy, OnChanges {
       horas.push(`${div[0]}h ${div[1]}m`);
     });
     let result = this.calculaHoras(horas);
-    return result ? `${this.pad(parseInt(result.h), 2)}:${this.pad(result.m,2)}`:result;
+    return result ? `${this.zfill.pad(parseInt(result.h), 2)}:${this.zfill.pad(result.m,2)}`:result;
   }
 
   calculaHoras(horas) {
@@ -83,8 +85,8 @@ export class RegistrosComponent implements OnInit, OnDestroy, OnChanges {
       case 5: {
         calc.push(this.hmh.diff(horas[0], horas[1], 'hours'));
         calc.push(this.hmh.diff(horas[2], horas[3], 'hours'));
-        result = this.hmh.sum(`${this.pad(parseInt(calc[0].h), 2)}h ${calc[0].m}m ${this.pad(parseInt(calc[1].h), 2)}h ${calc[1].m}m`, 'hours');
-        console.log(`${this.pad(parseInt(calc[0].h), 2)}h ${calc[0].m}m ${this.pad(parseInt(calc[1].h), 2)}h ${calc[1].m}m`);
+        result = this.hmh.sum(`${this.zfill.pad(parseInt(calc[0].h), 2)}h ${calc[0].m}m ${this.zfill.pad(parseInt(calc[1].h), 2)}h ${calc[1].m}m`, 'hours');
+        console.log(`${this.zfill.pad(parseInt(calc[0].h), 2)}h ${calc[0].m}m ${this.zfill.pad(parseInt(calc[1].h), 2)}h ${calc[1].m}m`);
         return result;
       }
       case 6:
@@ -92,8 +94,8 @@ export class RegistrosComponent implements OnInit, OnDestroy, OnChanges {
         calc.push(this.hmh.diff(horas[0], horas[1], 'hours'));
         calc.push(this.hmh.diff(horas[2], horas[3], 'hours'));
         calc.push(this.hmh.diff(horas[4], horas[5], 'hours'));
-        result =  this.hmh.sum(`${this.hmh.sum(`${this.pad(parseInt(calc[0].h), 2)}h ${calc[0].m}m ${this.pad(parseInt(calc[1].h), 2)}h ${calc[1].m}m`, 'hours')}
-          ${this.pad(parseInt(calc[2].h), 2)}h ${calc[2].m}m           `
+        result =  this.hmh.sum(`${this.hmh.sum(`${this.zfill.pad(parseInt(calc[0].h), 2)}h ${calc[0].m}m ${this.zfill.pad(parseInt(calc[1].h), 2)}h ${calc[1].m}m`, 'hours')}
+          ${this.zfill.pad(parseInt(calc[2].h), 2)}h ${calc[2].m}m           `
         ,'hours');
         return result;
       }
@@ -101,11 +103,5 @@ export class RegistrosComponent implements OnInit, OnDestroy, OnChanges {
         return '';
       }
     }
-  }
-
-  pad(num, size) {
-    let s = num+"";
-    while (s.length < size) s = "0" + s;
-    return s;
   }
 }

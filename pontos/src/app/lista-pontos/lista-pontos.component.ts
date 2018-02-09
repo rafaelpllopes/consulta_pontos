@@ -1,7 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ListaPontosService } from './lista-pontos.service';
 import { Subscription } from 'rxjs/Rx';
 import { Router } from '@angular/router';
+
+import { ListaPontosService } from './lista-pontos.service';
+import { Zfill } from '../helpers/Zfill';
 
 @Component({
   selector: 'app-lista-pontos',
@@ -17,6 +19,7 @@ export class ListaPontosComponent implements OnInit, OnDestroy {
   filtro: string;
   anos: any;
   meses: any;
+  zfill = new Zfill();
 
   anoAtual = new Date().getFullYear();
 
@@ -31,7 +34,7 @@ export class ListaPontosComponent implements OnInit, OnDestroy {
     private router: Router
   ) {
     this.ponto = '166';
-    this.mes = this.pad((new Date().getMonth() + 1).toString(), 2);
+    this.mes = this.zfill.pad((new Date().getMonth() + 1).toString(), 2);
     this.ano = new Date().getFullYear();
   }
 
@@ -78,11 +81,5 @@ export class ListaPontosComponent implements OnInit, OnDestroy {
       'mes': this.mes,
       'ano': this.ano
     };
-  }
-
-  pad(num, size) {
-    let s = num+"";
-    while (s.length < size) s = "0" + s;
-    return s;
   }
 }
