@@ -6,7 +6,6 @@
       <select mz-select id="options-select" [label]="'Local do ponto'" [placeholder]="'Selecione o ponto'" [(ngModel)]="ponto" (change)="buscarProfissionais()">
         <option value="" disabled>Selecione o ponto</option>
         <option *ngFor="let ponto of pontos" [value]="ponto.codigo">{{ ponto.nome }}</option>
-        <option [value]="166" [selected]="ponto == 'SMSI'">SMSI</option>
       </select>
     </mz-select-container>
     <div class="row">
