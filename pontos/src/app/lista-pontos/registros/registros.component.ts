@@ -1,6 +1,5 @@
 import { Subscription } from 'rxjs/Rx';
-import { Component, OnInit, OnDestroy, Input, OnChanges } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy, Input, OnChanges, ViewChild, ElementRef } from '@angular/core';
 
 import { ListaPontosService } from './../lista-pontos.service';
 import { Hmh } from '../../helpers/Hmh';
@@ -19,27 +18,27 @@ export class RegistrosComponent implements OnInit, OnDestroy, OnChanges {
   unidade: string;
   hmh = new Hmh();
   zfill = new Zfill();
+  @ViewChild('ref') ref: ElementRef; 
 
   constructor(
     private service: ListaPontosService,
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.ref.nativeElement.focus();
+  }
 
   ngOnChanges() {
     this.registros.length = 0;
-    
-    if (this.parametros.ponto == '166'){
-      this.unidade = 'SMSI';
-    } else {
-      this.service.getUnidade(this.parametros.ponto).subscribe(unidade => this.unidade = unidade[0].nome);
-    }
+
+    this.service.getUnidade(this.parametros.ponto).subscribe(unidade => this.unidade = unidade[0].nome);
 
     this.inscricaoRegistros = this.service.getRegistros(
       this.parametros.matricula, this.parametros.ponto, this.parametros.mes, this.parametros.ano
     ).subscribe(registros => 
       registros.forEach(registro => this.registros.push(registro))
     );
+    this.ref.nativeElement.focus();
   } 
 
   ngOnDestroy() {
